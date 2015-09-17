@@ -19,5 +19,16 @@ namespace WakeOnLan.Business
 
 		public bool UsePingPacket { get; set; }
 		public bool UseBroadcast { get; set; }
+
+		public string Password { get; set; }
+
+		public string FormattedMac(string separator)
+		{
+			return Utilities.FormatMediaAccessControl(this.MediaAccessControl, separator);
+		}
+		public byte[] GetMacBytes()
+		{
+			return Utilities.HexStringToBytes(this.MediaAccessControl);
+		}
 	}
 }

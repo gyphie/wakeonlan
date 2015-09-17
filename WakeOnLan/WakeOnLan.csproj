@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Newtonsoft.Json.7.0.1\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,7 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\Entry.cs" />
+    <Compile Include="Business\Persistence.cs" />
     <Compile Include="Business\Utilities.cs" />
+    <Compile Include="Business\WOL.cs" />
     <Compile Include="Forms\About.cs">
       <SubType>Form</SubType>
     </Compile>

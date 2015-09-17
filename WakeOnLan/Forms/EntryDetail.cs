@@ -22,7 +22,7 @@ namespace WakeOnLan.Forms
 			if (entry == null) entry = new Entry();
 
 			this.txtDescription.Text = entry.Name;
-			this.txtMediaAccessControl.Text = entry.MediaAccessControl;
+			this.txtMediaAccessControl.Text = entry.FormattedMac(":");
 			this.txtHostName.Text = entry.HostOrIP;
 			this.txtPort.Text = entry.PortNumber.ToString();
 			this.cbUsePingPacket.Checked = entry.UsePingPacket;
@@ -33,13 +33,11 @@ namespace WakeOnLan.Forms
 			{
 				entry.Name = this.txtDescription.Text.Trim();
 				entry.HostOrIP = Utilities.IsValidIpAddress(this.txtHostName.Text) ? Utilities.FormatIpAddress(this.txtHostName.Text) : this.txtHostName.Text.Trim();
-				entry.MediaAccessControl = Utilities.FormatMediaAccessControl(this.txtMediaAccessControl.Text);
-				entry.PortNumber = Convert.ToUInt16(this.txtPort.Text);
+				entry.MediaAccessControl = Utilities.FormatMediaAccessControl(this.txtMediaAccessControl.Text, "");
+				entry.PortNumber = Utilities.ParsePort(this.txtPort.Text);
 				entry.UsePingPacket = this.cbUsePingPacket.Checked;
 				entry.UseBroadcast = false;
 
-
-				// Write the values to the entry object
 				return entry;
 			}
 			else
@@ -56,8 +54,26 @@ namespace WakeOnLan.Forms
 		private void btnOK_Click(object sender, EventArgs e)
 		{
 			// Validate the form
-
-
+			if (string.IsNullOrWhiteSpace(this.txtDescription.Text))
+			{
+				MessageBox.Show("Invalid Description.");
+				return;
+			}
+			if (!Utilities.IsValidIpAddress(this.txtHostName.Text) && !Utilities.IsValidateHostName(this.txtHostName.Text))
+			{
+				MessageBox.Show("Invalid IP/Host name.");
+				return;
+			}
+			if (!Utilities.IsValidPort(this.txtPort.Text))
+			{
+				MessageBox.Show("Invalid Port. Must be a value from 0 to 65534.");
+				return;
+			}
+			if (!Utilities.IsValidateMediaAccessControl(this.txtMediaAccessControl.Text))
+			{
+				MessageBox.Show("Invalid MAC address.", "Validation Error");
+				return;
+			}
 
 			this.DialogResult = System.Windows.Forms.DialogResult.OK;	// Causes the dialog to hide as well
 		}

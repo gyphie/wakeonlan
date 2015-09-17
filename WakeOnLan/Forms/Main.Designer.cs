@@ -31,27 +31,23 @@
 			this.components = new System.ComponentModel.Container();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.menuMain = new System.Windows.Forms.MenuStrip();
-			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.mmiFile = new System.Windows.Forms.ToolStripMenuItem();
+			this.fileMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.fmiWake = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.newEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.editEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.deleteEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.fmiNewEntry = new System.Windows.Forms.ToolStripMenuItem();
+			this.fmiEditEntry = new System.Windows.Forms.ToolStripMenuItem();
+			this.fmiDeleteEntry = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.copyEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.deleteEntryToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-			this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.fmiExit = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuForList = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+			this.lmiWake = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-			this.newEntryToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-			this.editEntryToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.deleteEntryToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+			this.lmiNewEntry = new System.Windows.Forms.ToolStripMenuItem();
+			this.lmiEditEntry = new System.Windows.Forms.ToolStripMenuItem();
+			this.lmiDeleteEntry = new System.Windows.Forms.ToolStripMenuItem();
 			this.newEntryToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.listEntries = new System.Windows.Forms.ListView();
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -59,12 +55,23 @@
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+			this.fmiCloneEntry = new System.Windows.Forms.ToolStripMenuItem();
+			this.lmiCloneEntry = new System.Windows.Forms.ToolStripMenuItem();
+			this.readyStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.wakingStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.statusStrip1.SuspendLayout();
 			this.menuMain.SuspendLayout();
+			this.fileMenu.SuspendLayout();
 			this.contextMenuForList.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// statusStrip1
 			// 
+			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.readyStatusLabel,
+            this.wakingStatusLabel});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 296);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(618, 22);
@@ -74,8 +81,7 @@
 			// menuMain
 			// 
 			this.menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.editToolStripMenuItem,
+            this.mmiFile,
             this.helpToolStripMenuItem});
 			this.menuMain.Location = new System.Drawing.Point(0, 0);
 			this.menuMain.Name = "menuMain";
@@ -83,96 +89,73 @@
 			this.menuMain.TabIndex = 1;
 			this.menuMain.Text = "Main Menu";
 			// 
-			// fileToolStripMenuItem
+			// mmiFile
 			// 
-			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
+			this.mmiFile.DropDown = this.fileMenu;
+			this.mmiFile.Name = "mmiFile";
+			this.mmiFile.Size = new System.Drawing.Size(37, 20);
+			this.mmiFile.Text = "&File";
+			// 
+			// fileMenu
+			// 
+			this.fileMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fmiWake,
             this.toolStripSeparator2,
-            this.newEntryToolStripMenuItem,
-            this.editEntryToolStripMenuItem,
-            this.deleteEntryToolStripMenuItem,
+            this.fmiNewEntry,
+            this.fmiEditEntry,
+            this.fmiCloneEntry,
+            this.fmiDeleteEntry,
             this.toolStripSeparator1,
-            this.exitToolStripMenuItem});
-			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-			this.fileToolStripMenuItem.Text = "&File";
+            this.preferencesToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.fmiExit});
+			this.fileMenu.Name = "fileMenu";
+			this.fileMenu.Size = new System.Drawing.Size(145, 176);
+			this.fileMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuForList_Opening);
 			// 
-			// toolStripMenuItem1
+			// fmiWake
 			// 
-			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-			this.toolStripMenuItem1.Text = "&Wake Entry";
+			this.fmiWake.Name = "fmiWake";
+			this.fmiWake.Size = new System.Drawing.Size(144, 22);
+			this.fmiWake.Text = "&Wake Entry";
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(141, 6);
 			// 
-			// newEntryToolStripMenuItem
+			// fmiNewEntry
 			// 
-			this.newEntryToolStripMenuItem.Name = "newEntryToolStripMenuItem";
-			this.newEntryToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.newEntryToolStripMenuItem.Text = "&New Entry...";
-			this.newEntryToolStripMenuItem.Click += new System.EventHandler(this.newEntryToolStripMenuItem_Click);
+			this.fmiNewEntry.Name = "fmiNewEntry";
+			this.fmiNewEntry.Size = new System.Drawing.Size(144, 22);
+			this.fmiNewEntry.Text = "&New Entry...";
+			this.fmiNewEntry.Click += new System.EventHandler(this.newEntry_Click);
 			// 
-			// editEntryToolStripMenuItem
+			// fmiEditEntry
 			// 
-			this.editEntryToolStripMenuItem.Name = "editEntryToolStripMenuItem";
-			this.editEntryToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.editEntryToolStripMenuItem.Text = "&Edit Entry...";
-			this.editEntryToolStripMenuItem.Click += new System.EventHandler(this.editEntry_Click);
+			this.fmiEditEntry.Name = "fmiEditEntry";
+			this.fmiEditEntry.Size = new System.Drawing.Size(144, 22);
+			this.fmiEditEntry.Text = "&Edit Entry...";
+			this.fmiEditEntry.Click += new System.EventHandler(this.editEntry_Click);
 			// 
-			// deleteEntryToolStripMenuItem
+			// fmiDeleteEntry
 			// 
-			this.deleteEntryToolStripMenuItem.Name = "deleteEntryToolStripMenuItem";
-			this.deleteEntryToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.deleteEntryToolStripMenuItem.Text = "&Delete Entry...";
+			this.fmiDeleteEntry.Name = "fmiDeleteEntry";
+			this.fmiDeleteEntry.Size = new System.Drawing.Size(144, 22);
+			this.fmiDeleteEntry.Text = "&Delete Entry";
+			this.fmiDeleteEntry.Click += new System.EventHandler(this.deleteEntry_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(141, 6);
 			// 
-			// exitToolStripMenuItem
+			// fmiExit
 			// 
-			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.exitToolStripMenuItem.Text = "E&xit";
-			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-			// 
-			// editToolStripMenuItem
-			// 
-			this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyEntryToolStripMenuItem,
-            this.deleteEntryToolStripMenuItem1,
-            this.toolStripSeparator3,
-            this.preferencesToolStripMenuItem});
-			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-			this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-			this.editToolStripMenuItem.Text = "&Edit";
-			// 
-			// copyEntryToolStripMenuItem
-			// 
-			this.copyEntryToolStripMenuItem.Name = "copyEntryToolStripMenuItem";
-			this.copyEntryToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
-			this.copyEntryToolStripMenuItem.Text = "&Copy Entry";
-			// 
-			// deleteEntryToolStripMenuItem1
-			// 
-			this.deleteEntryToolStripMenuItem1.Name = "deleteEntryToolStripMenuItem1";
-			this.deleteEntryToolStripMenuItem1.Size = new System.Drawing.Size(144, 22);
-			this.deleteEntryToolStripMenuItem1.Text = "&Delete Entry";
-			// 
-			// toolStripSeparator3
-			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(141, 6);
-			// 
-			// preferencesToolStripMenuItem
-			// 
-			this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-			this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
-			this.preferencesToolStripMenuItem.Text = "&Preferences...";
+			this.fmiExit.Name = "fmiExit";
+			this.fmiExit.Size = new System.Drawing.Size(144, 22);
+			this.fmiExit.Text = "E&xit";
+			this.fmiExit.Click += new System.EventHandler(this.exitMenuItem_Click);
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -192,44 +175,49 @@
 			// contextMenuForList
 			// 
 			this.contextMenuForList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem2,
+            this.lmiWake,
             this.toolStripSeparator4,
-            this.newEntryToolStripMenuItem2,
-            this.editEntryToolStripMenuItem1,
-            this.deleteEntryToolStripMenuItem2});
+            this.lmiNewEntry,
+            this.lmiEditEntry,
+            this.lmiCloneEntry,
+            this.lmiDeleteEntry});
 			this.contextMenuForList.Name = "contextMenuForList";
-			this.contextMenuForList.Size = new System.Drawing.Size(147, 98);
+			this.contextMenuForList.Size = new System.Drawing.Size(147, 120);
+			this.contextMenuForList.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuForList_Opening);
 			// 
-			// toolStripMenuItem2
+			// lmiWake
 			// 
-			this.toolStripMenuItem2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-			this.toolStripMenuItem2.Size = new System.Drawing.Size(146, 22);
-			this.toolStripMenuItem2.Text = "&Wake";
+			this.lmiWake.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+			this.lmiWake.Name = "lmiWake";
+			this.lmiWake.Size = new System.Drawing.Size(146, 22);
+			this.lmiWake.Text = "&Wake";
+			this.lmiWake.Click += new System.EventHandler(this.wakeEntry_Click);
 			// 
 			// toolStripSeparator4
 			// 
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
 			this.toolStripSeparator4.Size = new System.Drawing.Size(143, 6);
 			// 
-			// newEntryToolStripMenuItem2
+			// lmiNewEntry
 			// 
-			this.newEntryToolStripMenuItem2.Name = "newEntryToolStripMenuItem2";
-			this.newEntryToolStripMenuItem2.Size = new System.Drawing.Size(146, 22);
-			this.newEntryToolStripMenuItem2.Text = "&New Entry...";
+			this.lmiNewEntry.Name = "lmiNewEntry";
+			this.lmiNewEntry.Size = new System.Drawing.Size(146, 22);
+			this.lmiNewEntry.Text = "&New Entry...";
+			this.lmiNewEntry.Click += new System.EventHandler(this.newEntry_Click);
 			// 
-			// editEntryToolStripMenuItem1
+			// lmiEditEntry
 			// 
-			this.editEntryToolStripMenuItem1.Name = "editEntryToolStripMenuItem1";
-			this.editEntryToolStripMenuItem1.Size = new System.Drawing.Size(146, 22);
-			this.editEntryToolStripMenuItem1.Text = "&Edit Entry...";
-			this.editEntryToolStripMenuItem1.Click += new System.EventHandler(this.editEntry_Click);
+			this.lmiEditEntry.Name = "lmiEditEntry";
+			this.lmiEditEntry.Size = new System.Drawing.Size(146, 22);
+			this.lmiEditEntry.Text = "&Edit Entry...";
+			this.lmiEditEntry.Click += new System.EventHandler(this.editEntry_Click);
 			// 
-			// deleteEntryToolStripMenuItem2
+			// lmiDeleteEntry
 			// 
-			this.deleteEntryToolStripMenuItem2.Name = "deleteEntryToolStripMenuItem2";
-			this.deleteEntryToolStripMenuItem2.Size = new System.Drawing.Size(146, 22);
-			this.deleteEntryToolStripMenuItem2.Text = "&Delete Entry...";
+			this.lmiDeleteEntry.Name = "lmiDeleteEntry";
+			this.lmiDeleteEntry.Size = new System.Drawing.Size(146, 22);
+			this.lmiDeleteEntry.Text = "&Delete Entry...";
+			this.lmiDeleteEntry.Click += new System.EventHandler(this.deleteEntry_Click);
 			// 
 			// newEntryToolStripMenuItem1
 			// 
@@ -255,30 +243,73 @@
 			this.listEntries.MultiSelect = false;
 			this.listEntries.Name = "listEntries";
 			this.listEntries.ShowGroups = false;
-			this.listEntries.Size = new System.Drawing.Size(618, 266);
+			this.listEntries.Size = new System.Drawing.Size(618, 270);
 			this.listEntries.TabIndex = 2;
 			this.listEntries.UseCompatibleStateImageBehavior = false;
 			this.listEntries.View = System.Windows.Forms.View.Details;
+			this.listEntries.DoubleClick += new System.EventHandler(this.wakeEntry_Click);
 			// 
 			// columnHeader1
 			// 
 			this.columnHeader1.Text = "Description";
+			this.columnHeader1.Width = 195;
 			// 
 			// columnHeader2
 			// 
 			this.columnHeader2.Text = "Host";
+			this.columnHeader2.Width = 184;
 			// 
 			// columnHeader4
 			// 
 			this.columnHeader4.Text = "Port";
+			this.columnHeader4.Width = 50;
 			// 
 			// columnHeader3
 			// 
 			this.columnHeader3.Text = "MAC";
+			this.columnHeader3.Width = 124;
 			// 
 			// columnHeader5
 			// 
 			this.columnHeader5.Text = "Use Ping";
+			// 
+			// preferencesToolStripMenuItem
+			// 
+			this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
+			this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+			this.preferencesToolStripMenuItem.Text = "&Preferences...";
+			// 
+			// toolStripSeparator5
+			// 
+			this.toolStripSeparator5.Name = "toolStripSeparator5";
+			this.toolStripSeparator5.Size = new System.Drawing.Size(141, 6);
+			// 
+			// fmiCloneEntry
+			// 
+			this.fmiCloneEntry.Name = "fmiCloneEntry";
+			this.fmiCloneEntry.Size = new System.Drawing.Size(144, 22);
+			this.fmiCloneEntry.Text = "&Clone Entry";
+			this.fmiCloneEntry.Click += new System.EventHandler(this.copyEntryToolStripMenuItem_Click);
+			// 
+			// lmiCloneEntry
+			// 
+			this.lmiCloneEntry.Name = "lmiCloneEntry";
+			this.lmiCloneEntry.Size = new System.Drawing.Size(146, 22);
+			this.lmiCloneEntry.Text = "&Clone Entry";
+			this.lmiCloneEntry.Click += new System.EventHandler(this.copyEntryToolStripMenuItem_Click);
+			// 
+			// readyStatusLabel
+			// 
+			this.readyStatusLabel.Name = "readyStatusLabel";
+			this.readyStatusLabel.Size = new System.Drawing.Size(39, 17);
+			this.readyStatusLabel.Text = "Ready";
+			// 
+			// wakingStatusLabel
+			// 
+			this.wakingStatusLabel.Name = "wakingStatusLabel";
+			this.wakingStatusLabel.Size = new System.Drawing.Size(56, 17);
+			this.wakingStatusLabel.Text = "Waking...";
+			this.wakingStatusLabel.Visible = false;
 			// 
 			// frmMain
 			// 
@@ -292,8 +323,11 @@
 			this.MinimumSize = new System.Drawing.Size(270, 140);
 			this.Name = "frmMain";
 			this.Text = "Wake On Lan";
+			this.statusStrip1.ResumeLayout(false);
+			this.statusStrip1.PerformLayout();
 			this.menuMain.ResumeLayout(false);
 			this.menuMain.PerformLayout();
+			this.fileMenu.ResumeLayout(false);
 			this.contextMenuForList.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -304,27 +338,22 @@
 
 		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.MenuStrip menuMain;
-		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem mmiFile;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem fmiWake;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-		private System.Windows.Forms.ToolStripMenuItem newEntryToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem editEntryToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem deleteEntryToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem fmiNewEntry;
+		private System.Windows.Forms.ToolStripMenuItem fmiEditEntry;
+		private System.Windows.Forms.ToolStripMenuItem fmiDeleteEntry;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem copyEntryToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem deleteEntryToolStripMenuItem1;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-		private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem fmiExit;
 		private System.Windows.Forms.ContextMenuStrip contextMenuForList;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+		private System.Windows.Forms.ToolStripMenuItem lmiWake;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-		private System.Windows.Forms.ToolStripMenuItem newEntryToolStripMenuItem2;
-		private System.Windows.Forms.ToolStripMenuItem editEntryToolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem deleteEntryToolStripMenuItem2;
+		private System.Windows.Forms.ToolStripMenuItem lmiNewEntry;
+		private System.Windows.Forms.ToolStripMenuItem lmiEditEntry;
+		private System.Windows.Forms.ToolStripMenuItem lmiDeleteEntry;
 		private System.Windows.Forms.ToolStripMenuItem newEntryToolStripMenuItem1;
 		private System.Windows.Forms.ListView listEntries;
 		private System.Windows.Forms.ColumnHeader columnHeader1;
@@ -332,6 +361,13 @@
 		private System.Windows.Forms.ColumnHeader columnHeader3;
 		private System.Windows.Forms.ColumnHeader columnHeader4;
 		private System.Windows.Forms.ColumnHeader columnHeader5;
+		private System.Windows.Forms.ContextMenuStrip fileMenu;
+		private System.Windows.Forms.ToolStripMenuItem fmiCloneEntry;
+		private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+		private System.Windows.Forms.ToolStripStatusLabel readyStatusLabel;
+		private System.Windows.Forms.ToolStripMenuItem lmiCloneEntry;
+		private System.Windows.Forms.ToolStripStatusLabel wakingStatusLabel;
 	}
 }
 
