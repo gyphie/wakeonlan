@@ -29,7 +29,10 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.readyStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.wakingStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.menuMain = new System.Windows.Forms.MenuStrip();
 			this.mmiFile = new System.Windows.Forms.ToolStripMenuItem();
 			this.fileMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -37,8 +40,11 @@
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.fmiNewEntry = new System.Windows.Forms.ToolStripMenuItem();
 			this.fmiEditEntry = new System.Windows.Forms.ToolStripMenuItem();
+			this.fmiCloneEntry = new System.Windows.Forms.ToolStripMenuItem();
 			this.fmiDeleteEntry = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.fmiExit = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,6 +53,7 @@
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.lmiNewEntry = new System.Windows.Forms.ToolStripMenuItem();
 			this.lmiEditEntry = new System.Windows.Forms.ToolStripMenuItem();
+			this.lmiCloneEntry = new System.Windows.Forms.ToolStripMenuItem();
 			this.lmiDeleteEntry = new System.Windows.Forms.ToolStripMenuItem();
 			this.newEntryToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.listEntries = new System.Windows.Forms.ListView();
@@ -55,12 +62,7 @@
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-			this.fmiCloneEntry = new System.Windows.Forms.ToolStripMenuItem();
-			this.lmiCloneEntry = new System.Windows.Forms.ToolStripMenuItem();
-			this.readyStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-			this.wakingStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.bgwWake = new System.ComponentModel.BackgroundWorker();
 			this.statusStrip1.SuspendLayout();
 			this.menuMain.SuspendLayout();
 			this.fileMenu.SuspendLayout();
@@ -77,6 +79,19 @@
 			this.statusStrip1.Size = new System.Drawing.Size(618, 22);
 			this.statusStrip1.TabIndex = 0;
 			this.statusStrip1.Text = "statusStrip1";
+			// 
+			// readyStatusLabel
+			// 
+			this.readyStatusLabel.Name = "readyStatusLabel";
+			this.readyStatusLabel.Size = new System.Drawing.Size(39, 17);
+			this.readyStatusLabel.Text = "Ready";
+			// 
+			// wakingStatusLabel
+			// 
+			this.wakingStatusLabel.Name = "wakingStatusLabel";
+			this.wakingStatusLabel.Size = new System.Drawing.Size(56, 17);
+			this.wakingStatusLabel.Text = "Waking...";
+			this.wakingStatusLabel.Visible = false;
 			// 
 			// menuMain
 			// 
@@ -110,6 +125,7 @@
             this.toolStripSeparator5,
             this.fmiExit});
 			this.fileMenu.Name = "fileMenu";
+			this.fileMenu.OwnerItem = this.mmiFile;
 			this.fileMenu.Size = new System.Drawing.Size(145, 176);
 			this.fileMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuForList_Opening);
 			// 
@@ -138,6 +154,13 @@
 			this.fmiEditEntry.Text = "&Edit Entry...";
 			this.fmiEditEntry.Click += new System.EventHandler(this.editEntry_Click);
 			// 
+			// fmiCloneEntry
+			// 
+			this.fmiCloneEntry.Name = "fmiCloneEntry";
+			this.fmiCloneEntry.Size = new System.Drawing.Size(144, 22);
+			this.fmiCloneEntry.Text = "&Clone Entry";
+			this.fmiCloneEntry.Click += new System.EventHandler(this.copyEntryToolStripMenuItem_Click);
+			// 
 			// fmiDeleteEntry
 			// 
 			this.fmiDeleteEntry.Name = "fmiDeleteEntry";
@@ -149,6 +172,18 @@
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(141, 6);
+			// 
+			// preferencesToolStripMenuItem
+			// 
+			this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
+			this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+			this.preferencesToolStripMenuItem.Text = "&Preferences...";
+			this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
+			// 
+			// toolStripSeparator5
+			// 
+			this.toolStripSeparator5.Name = "toolStripSeparator5";
+			this.toolStripSeparator5.Size = new System.Drawing.Size(141, 6);
 			// 
 			// fmiExit
 			// 
@@ -168,7 +203,7 @@
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
 			this.aboutToolStripMenuItem.Text = "&About";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
@@ -212,6 +247,13 @@
 			this.lmiEditEntry.Text = "&Edit Entry...";
 			this.lmiEditEntry.Click += new System.EventHandler(this.editEntry_Click);
 			// 
+			// lmiCloneEntry
+			// 
+			this.lmiCloneEntry.Name = "lmiCloneEntry";
+			this.lmiCloneEntry.Size = new System.Drawing.Size(146, 22);
+			this.lmiCloneEntry.Text = "&Clone Entry";
+			this.lmiCloneEntry.Click += new System.EventHandler(this.copyEntryToolStripMenuItem_Click);
+			// 
 			// lmiDeleteEntry
 			// 
 			this.lmiDeleteEntry.Name = "lmiDeleteEntry";
@@ -248,6 +290,7 @@
 			this.listEntries.UseCompatibleStateImageBehavior = false;
 			this.listEntries.View = System.Windows.Forms.View.Details;
 			this.listEntries.DoubleClick += new System.EventHandler(this.wakeEntry_Click);
+			this.listEntries.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listEntries_KeyUp);
 			// 
 			// columnHeader1
 			// 
@@ -273,43 +316,10 @@
 			// 
 			this.columnHeader5.Text = "Use Ping";
 			// 
-			// preferencesToolStripMenuItem
+			// bgwWake
 			// 
-			this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-			this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
-			this.preferencesToolStripMenuItem.Text = "&Preferences...";
-			// 
-			// toolStripSeparator5
-			// 
-			this.toolStripSeparator5.Name = "toolStripSeparator5";
-			this.toolStripSeparator5.Size = new System.Drawing.Size(141, 6);
-			// 
-			// fmiCloneEntry
-			// 
-			this.fmiCloneEntry.Name = "fmiCloneEntry";
-			this.fmiCloneEntry.Size = new System.Drawing.Size(144, 22);
-			this.fmiCloneEntry.Text = "&Clone Entry";
-			this.fmiCloneEntry.Click += new System.EventHandler(this.copyEntryToolStripMenuItem_Click);
-			// 
-			// lmiCloneEntry
-			// 
-			this.lmiCloneEntry.Name = "lmiCloneEntry";
-			this.lmiCloneEntry.Size = new System.Drawing.Size(146, 22);
-			this.lmiCloneEntry.Text = "&Clone Entry";
-			this.lmiCloneEntry.Click += new System.EventHandler(this.copyEntryToolStripMenuItem_Click);
-			// 
-			// readyStatusLabel
-			// 
-			this.readyStatusLabel.Name = "readyStatusLabel";
-			this.readyStatusLabel.Size = new System.Drawing.Size(39, 17);
-			this.readyStatusLabel.Text = "Ready";
-			// 
-			// wakingStatusLabel
-			// 
-			this.wakingStatusLabel.Name = "wakingStatusLabel";
-			this.wakingStatusLabel.Size = new System.Drawing.Size(56, 17);
-			this.wakingStatusLabel.Text = "Waking...";
-			this.wakingStatusLabel.Visible = false;
+			this.bgwWake.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwWake_DoWork);
+			this.bgwWake.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwWake_RunWorkerCompleted);
 			// 
 			// frmMain
 			// 
@@ -319,6 +329,7 @@
 			this.Controls.Add(this.listEntries);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuMain);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuMain;
 			this.MinimumSize = new System.Drawing.Size(270, 140);
 			this.Name = "frmMain";
@@ -368,6 +379,7 @@
 		private System.Windows.Forms.ToolStripStatusLabel readyStatusLabel;
 		private System.Windows.Forms.ToolStripMenuItem lmiCloneEntry;
 		private System.Windows.Forms.ToolStripStatusLabel wakingStatusLabel;
+		private System.ComponentModel.BackgroundWorker bgwWake;
 	}
 }
 

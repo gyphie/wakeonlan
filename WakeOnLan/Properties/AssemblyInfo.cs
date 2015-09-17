@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("WakeOnLan")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Application to send the WOL magic packet.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WakeOnLan")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCompany("ItsOurFamily")]
+[assembly: AssemblyProduct("Wake On Lan")]
+[assembly: AssemblyCopyright("Copyright © ItsOurFamily.org 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

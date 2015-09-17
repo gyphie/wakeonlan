@@ -137,7 +137,8 @@
 			this.textBoxDescription.Size = new System.Drawing.Size(271, 126);
 			this.textBoxDescription.TabIndex = 23;
 			this.textBoxDescription.TabStop = false;
-			this.textBoxDescription.Text = "Wake On LAN just the way I like it.";
+			this.textBoxDescription.Text = "Send the Magic Packet to wake a host.\r\n\r\nI didn\'t like the UI for other tools out" +
+    " there so this is my entry in the space.";
 			// 
 			// okButton
 			// 

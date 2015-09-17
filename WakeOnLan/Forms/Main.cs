@@ -41,6 +41,12 @@ namespace WakeOnLan.Forms
 				{
 					this.EntryToListViewItem(this.listEntries, entry);
 				}
+				this.listEntries.Focus();
+				if (this.listEntries.Items.Count > 0)
+				{
+					this.listEntries.Items[0].Selected = true;
+				}
+				
 			}
 			else
 			{
@@ -135,14 +141,21 @@ namespace WakeOnLan.Forms
 			this.lmiWake.Enabled = hasItem;
 			this.lmiEditEntry.Enabled = hasItem;
 			this.lmiDeleteEntry.Enabled = hasItem;
+			this.lmiCloneEntry.Enabled = hasItem;
 
 			this.fmiWake.Enabled = hasItem;
 			this.fmiEditEntry.Enabled = hasItem;
 			this.fmiDeleteEntry.Enabled = hasItem;
+			this.fmiCloneEntry.Enabled = hasItem;
 		}
 
 		private void wakeEntry_Click(object sender, EventArgs e)
 		{
+			if (this.bgwWake.IsBusy)
+			{
+				return;
+			}
+
 			if (this.listEntries.SelectedItems.Count == 0) return;
 
 			var item = this.listEntries.SelectedItems[0];
@@ -152,11 +165,37 @@ namespace WakeOnLan.Forms
 			this.wakingStatusLabel.Visible = true;
 			this.wakingStatusLabel.Text = string.Format("Waking...{0}", entry.Name);
 
+			this.bgwWake.RunWorkerAsync(entry);
+
+
+		}
+
+		private void bgwWake_DoWork(object sender, DoWorkEventArgs e)
+		{
+			var entry = e.Argument as Entry;
 			var result = WOL.Wake(entry);
 
-			this.readyStatusLabel.Visible = true;
-			this.wakingStatusLabel.Visible = false;
+			if (result == WOL.Results.Sent)
+			{
+				System.Threading.Thread.Sleep(1500);
+			}
 
+			e.Result = result;
+		}
+
+		private void bgwWake_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+		{
+			WOL.Results result = (WOL.Results)e.Result;
+
+			if (result != WOL.Results.Sent)
+			{
+				this.wakingStatusLabel.Text = "Could not send wake packet";
+			}
+			else
+			{
+				this.readyStatusLabel.Visible = true;
+				this.wakingStatusLabel.Visible = false;
+			}
 		}
 
 		private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -190,5 +229,14 @@ namespace WakeOnLan.Forms
 			this.EntryToListViewItem(this.listEntries, clone);
 			this.SaveData();
 		}
+
+		private void listEntries_KeyUp(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Return || e.KeyCode == Keys.Enter)
+			{
+				this.wakeEntry_Click(sender, null);
+			}
+		}
+
 	}
 }
