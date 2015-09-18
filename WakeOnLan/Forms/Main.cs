@@ -140,6 +140,7 @@ namespace WakeOnLan.Forms
 			var hasItem = this.listEntries.SelectedItems.Count > 0;
 			this.lmiWake.Enabled = hasItem;
 			this.lmiWake.Font = new Font(this.lmiWake.Font, hasItem ? FontStyle.Bold : FontStyle.Regular);
+			this.lmiNewEntry.Font = new Font(this.lmiNewEntry.Font, !hasItem ? FontStyle.Bold : FontStyle.Regular);
 			this.lmiEditEntry.Enabled = hasItem;
 			this.lmiDeleteEntry.Enabled = hasItem;
 			this.lmiCloneEntry.Enabled = hasItem;
