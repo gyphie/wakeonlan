@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
@@ -15,7 +16,10 @@ namespace WakeOnLan.Business
 		{
 			try
 			{
-				byte[] payload = new byte[102];
+				var hasPassword = !string.IsNullOrEmpty(entry.Password) && entry.Password.Length == 12;
+				var payloadLength = hasPassword ? 114 : 102;
+
+				byte[] payload = new byte[payloadLength];
 				Buffer.BlockCopy(sync, 0, payload, 0, sync.Length);
 
 				int offset = sync.Length;
@@ -25,20 +29,26 @@ namespace WakeOnLan.Business
 					Buffer.BlockCopy(mac, 0, payload, i * mac.Length + offset, mac.Length);
 				}
 
+				if (hasPassword)
+				{
+					Buffer.BlockCopy(Utilities.HexStringToBytes(entry.Password), 0, payload, 102, 0);
+				}
+
+
+				var host = entry.UseBroadcast ? IPAddress.Broadcast.ToString() : entry.HostOrIP;
 				if (entry.UsePingPacket)
 				{
 					using (var ping = new Ping())
 					{
-						ping.Send(entry.HostOrIP, 5, payload);
+						ping.Send(host, 5, payload);
 						return Results.Sent;
 					}
-
 				}
 				else
 				{
 					using (var client = new UdpClient())
 					{
-						client.Send(payload, payload.Length, entry.HostOrIP, entry.PortNumber);
+						client.Send(payload, payload.Length, host, entry.PortNumber);
 						return Results.Sent;
 					}
 				}

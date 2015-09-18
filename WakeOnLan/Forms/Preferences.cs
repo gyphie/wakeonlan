@@ -34,6 +34,7 @@ namespace WakeOnLan.Forms
 			if (entry == null) entry = new Entry();
 
 			this.cbUsePingPacket.Checked = entry.UsePingPacket;
+			this.cbUseBroadcast.Checked = entry.UseBroadcast;
 			this.txtPortNumber.Text = entry.PortNumber.ToString();
 
 			var result = this.ShowDialog();
@@ -42,7 +43,7 @@ namespace WakeOnLan.Forms
 			{
 				entry.PortNumber = Utilities.ParsePort(this.txtPortNumber.Text);
 				entry.UsePingPacket = this.cbUsePingPacket.Checked;
-				entry.UseBroadcast = false;
+				entry.UseBroadcast = this.cbUseBroadcast.Checked; ;
 
 				return entry;
 			}

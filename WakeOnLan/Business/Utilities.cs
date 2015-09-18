@@ -40,6 +40,12 @@ namespace WakeOnLan.Business
 			return string.Format("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}", separator, mac.Substring(0,2),mac.Substring(2,2),mac.Substring(4,2),mac.Substring(6,2),mac.Substring(8,2),mac.Substring(10,2));
 		}
 
+		public static bool IsValidSecureOnPassword(string value)
+		{
+			if (string.IsNullOrWhiteSpace(value)) return true;
+			return Regex.IsMatch(value, @"^[0-9A-F]{12}$", RegexOptions.IgnoreCase);
+		}
+
 		public static string FormatIpAddress(string ipAddress)
 		{
 			if (!IsValidIpAddress(ipAddress)) return ipAddress;

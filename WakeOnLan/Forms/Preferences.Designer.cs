@@ -28,18 +28,20 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPreferences));
 			this.txtPortNumber = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.cbUsePingPacket = new System.Windows.Forms.CheckBox();
 			this.btnOK = new System.Windows.Forms.Button();
 			this.btnCancel = new System.Windows.Forms.Button();
+			this.cbUseBroadcast = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// txtPortNumber
 			// 
 			this.txtPortNumber.Location = new System.Drawing.Point(84, 12);
 			this.txtPortNumber.Name = "txtPortNumber";
-			this.txtPortNumber.Size = new System.Drawing.Size(100, 20);
+			this.txtPortNumber.Size = new System.Drawing.Size(137, 20);
 			this.txtPortNumber.TabIndex = 1;
 			// 
 			// label1
@@ -63,23 +65,35 @@
 			// 
 			// btnOK
 			// 
-			this.btnOK.Location = new System.Drawing.Point(99, 89);
+			this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOK.Location = new System.Drawing.Point(78, 99);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(75, 23);
-			this.btnOK.TabIndex = 3;
+			this.btnOK.TabIndex = 4;
 			this.btnOK.Text = "&OK";
 			this.btnOK.UseVisualStyleBackColor = true;
 			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
 			// 
 			// btnCancel
 			// 
+			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btnCancel.Location = new System.Drawing.Point(180, 89);
+			this.btnCancel.Location = new System.Drawing.Point(159, 99);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
-			this.btnCancel.TabIndex = 4;
+			this.btnCancel.TabIndex = 5;
 			this.btnCancel.Text = "&Cancel";
 			this.btnCancel.UseVisualStyleBackColor = true;
+			// 
+			// cbUseBroadcast
+			// 
+			this.cbUseBroadcast.AutoSize = true;
+			this.cbUseBroadcast.Location = new System.Drawing.Point(15, 72);
+			this.cbUseBroadcast.Name = "cbUseBroadcast";
+			this.cbUseBroadcast.Size = new System.Drawing.Size(137, 17);
+			this.cbUseBroadcast.TabIndex = 3;
+			this.cbUseBroadcast.Text = "Use &Broadcast Address";
+			this.cbUseBroadcast.UseVisualStyleBackColor = true;
 			// 
 			// frmPreferences
 			// 
@@ -87,16 +101,19 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.btnCancel;
-			this.ClientSize = new System.Drawing.Size(267, 124);
+			this.ClientSize = new System.Drawing.Size(246, 135);
+			this.Controls.Add(this.cbUseBroadcast);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.cbUsePingPacket);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.txtPortNumber);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "frmPreferences";
+			this.ShowInTaskbar = false;
 			this.Text = "Preferences";
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -110,5 +127,6 @@
 		private System.Windows.Forms.CheckBox cbUsePingPacket;
 		private System.Windows.Forms.Button btnOK;
 		private System.Windows.Forms.Button btnCancel;
+		private System.Windows.Forms.CheckBox cbUseBroadcast;
 	}
 }

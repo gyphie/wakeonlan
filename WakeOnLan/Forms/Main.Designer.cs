@@ -63,6 +63,8 @@
 			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.bgwWake = new System.ComponentModel.BackgroundWorker();
+			this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.statusStrip1.SuspendLayout();
 			this.menuMain.SuspendLayout();
 			this.fileMenu.SuspendLayout();
@@ -76,7 +78,7 @@
             this.wakingStatusLabel});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 296);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(618, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(677, 22);
 			this.statusStrip1.TabIndex = 0;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -100,7 +102,7 @@
             this.helpToolStripMenuItem});
 			this.menuMain.Location = new System.Drawing.Point(0, 0);
 			this.menuMain.Name = "menuMain";
-			this.menuMain.Size = new System.Drawing.Size(618, 24);
+			this.menuMain.Size = new System.Drawing.Size(677, 24);
 			this.menuMain.TabIndex = 1;
 			this.menuMain.Text = "Main Menu";
 			// 
@@ -125,7 +127,6 @@
             this.toolStripSeparator5,
             this.fmiExit});
 			this.fileMenu.Name = "fileMenu";
-			this.fileMenu.OwnerItem = this.mmiFile;
 			this.fileMenu.Size = new System.Drawing.Size(145, 176);
 			this.fileMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuForList_Opening);
 			// 
@@ -133,7 +134,7 @@
 			// 
 			this.fmiWake.Name = "fmiWake";
 			this.fmiWake.Size = new System.Drawing.Size(144, 22);
-			this.fmiWake.Text = "&Wake Entry";
+			this.fmiWake.Text = "&Wake";
 			// 
 			// toolStripSeparator2
 			// 
@@ -151,21 +152,21 @@
 			// 
 			this.fmiEditEntry.Name = "fmiEditEntry";
 			this.fmiEditEntry.Size = new System.Drawing.Size(144, 22);
-			this.fmiEditEntry.Text = "&Edit Entry...";
+			this.fmiEditEntry.Text = "&Edit...";
 			this.fmiEditEntry.Click += new System.EventHandler(this.editEntry_Click);
 			// 
 			// fmiCloneEntry
 			// 
 			this.fmiCloneEntry.Name = "fmiCloneEntry";
 			this.fmiCloneEntry.Size = new System.Drawing.Size(144, 22);
-			this.fmiCloneEntry.Text = "&Clone Entry";
+			this.fmiCloneEntry.Text = "&Clone";
 			this.fmiCloneEntry.Click += new System.EventHandler(this.copyEntryToolStripMenuItem_Click);
 			// 
 			// fmiDeleteEntry
 			// 
 			this.fmiDeleteEntry.Name = "fmiDeleteEntry";
 			this.fmiDeleteEntry.Size = new System.Drawing.Size(144, 22);
-			this.fmiDeleteEntry.Text = "&Delete Entry";
+			this.fmiDeleteEntry.Text = "&Delete";
 			this.fmiDeleteEntry.Click += new System.EventHandler(this.deleteEntry_Click);
 			// 
 			// toolStripSeparator1
@@ -217,48 +218,48 @@
             this.lmiCloneEntry,
             this.lmiDeleteEntry});
 			this.contextMenuForList.Name = "contextMenuForList";
-			this.contextMenuForList.Size = new System.Drawing.Size(147, 120);
+			this.contextMenuForList.Size = new System.Drawing.Size(138, 120);
 			this.contextMenuForList.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuForList_Opening);
 			// 
 			// lmiWake
 			// 
 			this.lmiWake.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
 			this.lmiWake.Name = "lmiWake";
-			this.lmiWake.Size = new System.Drawing.Size(146, 22);
+			this.lmiWake.Size = new System.Drawing.Size(137, 22);
 			this.lmiWake.Text = "&Wake";
 			this.lmiWake.Click += new System.EventHandler(this.wakeEntry_Click);
 			// 
 			// toolStripSeparator4
 			// 
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(143, 6);
+			this.toolStripSeparator4.Size = new System.Drawing.Size(134, 6);
 			// 
 			// lmiNewEntry
 			// 
 			this.lmiNewEntry.Name = "lmiNewEntry";
-			this.lmiNewEntry.Size = new System.Drawing.Size(146, 22);
+			this.lmiNewEntry.Size = new System.Drawing.Size(137, 22);
 			this.lmiNewEntry.Text = "&New Entry...";
 			this.lmiNewEntry.Click += new System.EventHandler(this.newEntry_Click);
 			// 
 			// lmiEditEntry
 			// 
 			this.lmiEditEntry.Name = "lmiEditEntry";
-			this.lmiEditEntry.Size = new System.Drawing.Size(146, 22);
-			this.lmiEditEntry.Text = "&Edit Entry...";
+			this.lmiEditEntry.Size = new System.Drawing.Size(137, 22);
+			this.lmiEditEntry.Text = "&Edit...";
 			this.lmiEditEntry.Click += new System.EventHandler(this.editEntry_Click);
 			// 
 			// lmiCloneEntry
 			// 
 			this.lmiCloneEntry.Name = "lmiCloneEntry";
-			this.lmiCloneEntry.Size = new System.Drawing.Size(146, 22);
-			this.lmiCloneEntry.Text = "&Clone Entry";
+			this.lmiCloneEntry.Size = new System.Drawing.Size(137, 22);
+			this.lmiCloneEntry.Text = "&Clone";
 			this.lmiCloneEntry.Click += new System.EventHandler(this.copyEntryToolStripMenuItem_Click);
 			// 
 			// lmiDeleteEntry
 			// 
 			this.lmiDeleteEntry.Name = "lmiDeleteEntry";
-			this.lmiDeleteEntry.Size = new System.Drawing.Size(146, 22);
-			this.lmiDeleteEntry.Text = "&Delete Entry...";
+			this.lmiDeleteEntry.Size = new System.Drawing.Size(137, 22);
+			this.lmiDeleteEntry.Text = "&Delete";
 			this.lmiDeleteEntry.Click += new System.EventHandler(this.deleteEntry_Click);
 			// 
 			// newEntryToolStripMenuItem1
@@ -277,7 +278,9 @@
             this.columnHeader2,
             this.columnHeader4,
             this.columnHeader3,
-            this.columnHeader5});
+            this.columnHeader5,
+            this.columnHeader6,
+            this.columnHeader7});
 			this.listEntries.ContextMenuStrip = this.contextMenuForList;
 			this.listEntries.FullRowSelect = true;
 			this.listEntries.GridLines = true;
@@ -285,22 +288,23 @@
 			this.listEntries.MultiSelect = false;
 			this.listEntries.Name = "listEntries";
 			this.listEntries.ShowGroups = false;
-			this.listEntries.Size = new System.Drawing.Size(618, 270);
+			this.listEntries.Size = new System.Drawing.Size(677, 270);
 			this.listEntries.TabIndex = 2;
 			this.listEntries.UseCompatibleStateImageBehavior = false;
 			this.listEntries.View = System.Windows.Forms.View.Details;
-			this.listEntries.DoubleClick += new System.EventHandler(this.wakeEntry_Click);
+			this.listEntries.DoubleClick += new System.EventHandler(this.listEntries_DoubleClick);
 			this.listEntries.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listEntries_KeyUp);
+			this.listEntries.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listEntries_MouseUp);
 			// 
 			// columnHeader1
 			// 
 			this.columnHeader1.Text = "Description";
-			this.columnHeader1.Width = 195;
+			this.columnHeader1.Width = 135;
 			// 
 			// columnHeader2
 			// 
 			this.columnHeader2.Text = "Host";
-			this.columnHeader2.Width = 184;
+			this.columnHeader2.Width = 120;
 			// 
 			// columnHeader4
 			// 
@@ -321,11 +325,20 @@
 			this.bgwWake.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwWake_DoWork);
 			this.bgwWake.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwWake_RunWorkerCompleted);
 			// 
+			// columnHeader6
+			// 
+			this.columnHeader6.Text = "Use BC";
+			// 
+			// columnHeader7
+			// 
+			this.columnHeader7.Text = "SecureON";
+			this.columnHeader7.Width = 124;
+			// 
 			// frmMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(618, 318);
+			this.ClientSize = new System.Drawing.Size(677, 318);
 			this.Controls.Add(this.listEntries);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuMain);
@@ -380,6 +393,8 @@
 		private System.Windows.Forms.ToolStripMenuItem lmiCloneEntry;
 		private System.Windows.Forms.ToolStripStatusLabel wakingStatusLabel;
 		private System.ComponentModel.BackgroundWorker bgwWake;
+		private System.Windows.Forms.ColumnHeader columnHeader6;
+		private System.Windows.Forms.ColumnHeader columnHeader7;
 	}
 }
 

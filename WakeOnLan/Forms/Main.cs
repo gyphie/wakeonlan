@@ -61,9 +61,9 @@ namespace WakeOnLan.Forms
 			item.SubItems.Add(entry.HostOrIP);
 			item.SubItems.Add(entry.PortNumber.ToString());
 			item.SubItems.Add(entry.FormattedMac(":"));
-			item.SubItems.Add(entry.UsePingPacket ? "Y" : "N");
-			//item.SubItems.Add(entry.UseBroadcast ? "Y" : "N");
-			//item.SubItems.Add(entry.Password);
+			item.SubItems.Add(entry.UsePingPacket ? "Yes" : "No");
+			item.SubItems.Add(entry.UseBroadcast ? "Yes" : "No");
+			item.SubItems.Add(entry.Password);
 			item.Tag = entry;
 
 			this.listEntries.Items.Add(item);
@@ -95,9 +95,9 @@ namespace WakeOnLan.Forms
 			item.SubItems[1].Text = entry.HostOrIP;
 			item.SubItems[2].Text = entry.PortNumber.ToString();
 			item.SubItems[3].Text = entry.FormattedMac(":");
-			item.SubItems[4].Text = entry.UsePingPacket ? "Y" : "N";
-			//item.SubItems[5].Text = entry.UseBroadcast ? "Y" : "N";
-			//item.SubItems[6].Text = entry.Password;
+			item.SubItems[4].Text = entry.UsePingPacket ? "Yes" : "No";
+			item.SubItems[5].Text = entry.UseBroadcast ? "Yes" : "No";
+			item.SubItems[6].Text = entry.Password;
 
 			this.SaveData();
 		}
@@ -106,12 +106,12 @@ namespace WakeOnLan.Forms
 		{
 			if (this.listEntries.SelectedItems.Count == 0) return;
 
-			var item = this.listEntries.SelectedItems[0];
-			var entry = item.Tag as Entry;
-
-			this.listEntries.Items.Remove(item);
-
-			this.SaveData();
+			if (MessageBox.Show("Are you sure you want to delete this entry?", "Delete Entry?", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+			{
+				var item = this.listEntries.SelectedItems[0];
+				this.listEntries.Items.Remove(item);
+				this.SaveData();
+			}
 		}
 
 		private void SaveData()
@@ -139,6 +139,7 @@ namespace WakeOnLan.Forms
 		{
 			var hasItem = this.listEntries.SelectedItems.Count > 0;
 			this.lmiWake.Enabled = hasItem;
+			this.lmiWake.Font = new Font(this.lmiWake.Font, hasItem ? FontStyle.Bold : FontStyle.Regular);
 			this.lmiEditEntry.Enabled = hasItem;
 			this.lmiDeleteEntry.Enabled = hasItem;
 			this.lmiCloneEntry.Enabled = hasItem;
@@ -235,7 +236,48 @@ namespace WakeOnLan.Forms
 			if (e.KeyCode == Keys.Return || e.KeyCode == Keys.Enter)
 			{
 				this.wakeEntry_Click(sender, null);
+				e.Handled = true;
 			}
+			else if (e.KeyCode == Keys.Delete)
+			{
+				this.deleteEntry_Click(sender, null);
+				e.Handled = true;
+			}
+		}
+
+		private void listEntries_DoubleClick(object sender, EventArgs e)
+		{
+			if (this.listEntries.SelectedItems.Count == 0)
+			{
+				newEntry_Click(sender, e);
+			}
+			else
+			{
+				wakeEntry_Click(sender, e);
+			};
+		}
+
+		int previousClick = SystemInformation.DoubleClickTime;
+		private void listEntries_MouseUp(object sender, MouseEventArgs e)
+		{
+			// Adapted from https://msdn.microsoft.com/en-us/library/ms172533%28v=vs.90%29.aspx
+			var s = sender as Control;
+			int now = System.Environment.TickCount;
+			
+			// A double-click is detected if the time elapsed 
+			// since the last click is within DoubleClickTime. 
+			if (now - previousClick <= SystemInformation.DoubleClickTime)
+			{
+				// Raise the DoubleClick event. 
+				listEntries_DoubleClick(sender, EventArgs.Empty);
+			}
+
+			// Set previousClick to now so that  
+			// subsequent double-clicks can be detected.
+			previousClick = now;
+
+			// Allow the base class to raise the regular Click event. 
+			base.OnClick(e);
 		}
 
 	}
