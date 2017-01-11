@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace WakeOnLan.Business
 {
 	public class Entry
 	{
-		public Entry()
-		{
-
-		}
+		public Entry() { }
 
 		public string Name { get; set; }
 		public string HostOrIP { get; set; }
@@ -30,5 +24,9 @@ namespace WakeOnLan.Business
 		{
 			return Utilities.HexStringToBytes(this.MediaAccessControl);
 		}
+
+		public UInt16 MaxNumberOfSends { get; set; }
+		public UInt16 DelayBetweenSends { get; set; }
+		public UInt16 NumberOfSends { get; set; }
 	}
 }

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+
 namespace WakeOnLan.Business
 {
 	public static class Persistence
@@ -16,9 +17,8 @@ namespace WakeOnLan.Business
 			return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "org.itsourfamily.wol", "data.json");
 		}
 
-		public static bool LoadData(out Entry defaults, out List<Entry> entries)
+		public static bool LoadData(ref Entry defaults, out List<Entry> entries)
 		{
-			defaults = null;
 			entries = null;
 
 			var dataFileName = Persistence.GetFilePath();
@@ -30,25 +30,51 @@ namespace WakeOnLan.Business
 			var dataFileContent = File.ReadAllText(dataFileName, Encoding.UTF8);
 			JObject jsonObj = JObject.Parse(dataFileContent);
 
-			defaults = new Entry();
-			defaults.PortNumber = jsonObj["default"]["PortNumber"].Value<UInt16>();
-			defaults.UsePingPacket = jsonObj["default"]["UsePingPacket"].Value<bool>();
-			defaults.UseBroadcast = jsonObj["default"]["UseBroadcast"].Value<bool>();
+			defaults = defaults ?? new Entry();
+			try
+			{
+				JObject defJson = jsonObj.Value<JObject>("default");
+
+				if (defJson != null)
+				{
+					var portNumber = defJson.Value<UInt16>("PortNumber");
+					defaults.PortNumber = portNumber <= 0 ? defaults.PortNumber : portNumber;
+					defaults.UsePingPacket = defJson.Value<bool>("UsePingPacket");
+					defaults.UseBroadcast = defJson.Value<bool>("UseBroadcast");
+
+					var maxNumberOfSends = defJson.Value<UInt16>("MaxNumberOfSends");
+					defaults.MaxNumberOfSends = maxNumberOfSends <= 0 ? defaults.MaxNumberOfSends : maxNumberOfSends;
+
+					var numberOfSends = defJson.Value<UInt16>("NumberOfSends"); ;
+					defaults.NumberOfSends = numberOfSends <= 0 ? defaults.NumberOfSends : numberOfSends;
+
+					var delayBetweenSends = defJson.Value<UInt16>("DelayBetweenSends");
+					defaults.DelayBetweenSends = delayBetweenSends <= 0 ? defaults.DelayBetweenSends : delayBetweenSends;
+				}
+			}
+			catch { }	// Ignore settings load errors
 
 			entries = new List<Entry>();
 
 			foreach (var jsEntry in jsonObj["entries"])
 			{
-				var entry = new Entry();
-				entry.Name = jsEntry["Name"].Value<string>();
-				entry.HostOrIP = jsEntry["HostOrIP"].Value<string>();
-				entry.PortNumber = jsEntry["PortNumber"].Value<UInt16>();
-				entry.MediaAccessControl = jsEntry["MediaAccessControl"].Value<string>();
-				entry.UsePingPacket = jsEntry["UsePingPacket"].Value<bool>();
-				entry.UseBroadcast = jsEntry["UseBroadcast"].Value<bool>();
-				entry.Password = jsEntry["Password"].Value<string>();
+				try
+				{
+					var entry = new Entry();
+					entry.Name = jsEntry.Value<string>("Name");
+					entry.HostOrIP = jsEntry.Value<string>("HostOrIP");
+					entry.PortNumber = jsEntry.Value<UInt16>("PortNumber");
+					entry.MediaAccessControl = jsEntry.Value<string>("MediaAccessControl");
+					entry.UsePingPacket = jsEntry.Value<bool>("UsePingPacket");
+					entry.UseBroadcast = jsEntry.Value<bool>("UseBroadcast");
+					entry.Password = jsEntry.Value<string>("Password");
+					entry.NumberOfSends = defaults.NumberOfSends;
+					entry.MaxNumberOfSends = defaults.MaxNumberOfSends;
+					entry.DelayBetweenSends = defaults.DelayBetweenSends;
 
-				entries.Add(entry);
+					entries.Add(entry);
+				}
+				catch { } // Ignore settings load errors
 			}
 
 			return true;

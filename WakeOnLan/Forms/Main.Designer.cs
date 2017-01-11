@@ -62,9 +62,9 @@
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.bgwWake = new System.ComponentModel.BackgroundWorker();
 			this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.bgwWake = new System.ComponentModel.BackgroundWorker();
 			this.statusStrip1.SuspendLayout();
 			this.menuMain.SuspendLayout();
 			this.fileMenu.SuspendLayout();
@@ -127,6 +127,7 @@
             this.toolStripSeparator5,
             this.fmiExit});
 			this.fileMenu.Name = "fileMenu";
+			this.fileMenu.OwnerItem = this.mmiFile;
 			this.fileMenu.Size = new System.Drawing.Size(145, 176);
 			this.fileMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuForList_Opening);
 			// 
@@ -320,11 +321,6 @@
 			// 
 			this.columnHeader5.Text = "Use Ping";
 			// 
-			// bgwWake
-			// 
-			this.bgwWake.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwWake_DoWork);
-			this.bgwWake.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwWake_RunWorkerCompleted);
-			// 
 			// columnHeader6
 			// 
 			this.columnHeader6.Text = "Use BC";
@@ -333,6 +329,13 @@
 			// 
 			this.columnHeader7.Text = "SecureON";
 			this.columnHeader7.Width = 124;
+			// 
+			// bgwWake
+			// 
+			this.bgwWake.WorkerReportsProgress = true;
+			this.bgwWake.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwWake_DoWork);
+			this.bgwWake.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgwWake_ProgressChanged);
+			this.bgwWake.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwWake_RunWorkerCompleted);
 			// 
 			// frmMain
 			// 

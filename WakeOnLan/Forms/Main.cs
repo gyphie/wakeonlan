@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using WakeOnLan.Business;
 
@@ -32,11 +30,15 @@ namespace WakeOnLan.Forms
 
 		private void LoadData()
 		{
-			Entry defaults;
+			this.defaults = new Entry();
+			this.defaults.PortNumber = 9;
+			this.defaults.MaxNumberOfSends = 10;
+			this.defaults.DelayBetweenSends = 2000;
+			this.defaults.NumberOfSends = 3;
+
 			List<Entry> entries;
-			if (Persistence.LoadData(out defaults, out entries))
+			if (Persistence.LoadData(ref this.defaults, out entries))
 			{
-				this.defaults = defaults;
 				foreach (var entry in entries)
 				{
 					this.EntryToListViewItem(this.listEntries, entry);
@@ -47,11 +49,6 @@ namespace WakeOnLan.Forms
 					this.listEntries.Items[0].Selected = true;
 				}
 				
-			}
-			else
-			{
-				this.defaults = new Entry();
-				this.defaults.PortNumber = 9;
 			}
 		}
 
@@ -165,7 +162,7 @@ namespace WakeOnLan.Forms
 
 			this.readyStatusLabel.Visible = false;
 			this.wakingStatusLabel.Visible = true;
-			this.wakingStatusLabel.Text = string.Format("Waking...{0}", entry.Name);
+			this.wakingStatusLabel.Text = $"Waking \"{entry.Name}\"";
 
 			this.bgwWake.RunWorkerAsync(entry);
 
@@ -175,14 +172,30 @@ namespace WakeOnLan.Forms
 		private void bgwWake_DoWork(object sender, DoWorkEventArgs e)
 		{
 			var entry = e.Argument as Entry;
-			var result = WOL.Wake(entry);
 
-			if (result == WOL.Results.Sent)
+			int numberOfSends = Math.Max(1, Math.Min(10, (int)entry.NumberOfSends));
+
+			WOL.Results result = WOL.Results.Unknown;
+			for (int i = 0; i < numberOfSends; i++)
 			{
-				System.Threading.Thread.Sleep(1500);
+				result = WOL.Wake(entry);
+				if (result != WOL.Results.Sent)
+				{
+					break;
+				}
+
+				(sender as BackgroundWorker).ReportProgress(i, entry);
+								
+				System.Threading.Thread.Sleep((int)entry.DelayBetweenSends);
 			}
 
 			e.Result = result;
+		}
+
+		private void bgwWake_ProgressChanged(object sender, ProgressChangedEventArgs e)
+		{
+			var entry = (Entry)e.UserState;
+			this.wakingStatusLabel.Text = $"Waking \"{entry.Name}\"...sent packet {e.ProgressPercentage + 1} of {entry.NumberOfSends}...";
 		}
 
 		private void bgwWake_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -225,7 +238,8 @@ namespace WakeOnLan.Forms
 				MediaAccessControl = entry.MediaAccessControl,
 				UsePingPacket = entry.UsePingPacket,
 				UseBroadcast = entry.UseBroadcast,
-				Password = entry.Password
+				Password = entry.Password,
+				NumberOfSends = entry.NumberOfSends
 			};
 
 			this.EntryToListViewItem(this.listEntries, clone);
